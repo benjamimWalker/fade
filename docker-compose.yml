@@ -1,0 +1,29 @@
+services:
+    db:
+        image: mysql:8.1.0
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: 'fade'
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./data:/var/lib/mysql
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www/html
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+
+    app:
+        build:
+            context: .
+        container_name: app
+        volumes:
+            - ./:/var/www/html
+            - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
