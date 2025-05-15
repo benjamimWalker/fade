@@ -12,7 +12,9 @@ RUN apk add --no-cache $PHPIZE_DEPS \
     libxml2-dev \
     libzip-dev \
     linux-headers \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets zip
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
