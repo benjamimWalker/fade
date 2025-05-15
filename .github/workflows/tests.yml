@@ -10,6 +10,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Add key
+        run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
